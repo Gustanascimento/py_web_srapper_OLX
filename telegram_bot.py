@@ -6,19 +6,21 @@ bot = telegram.Bot(token=token)
 
 def telegram_bot_send_message(titulo, data_postagem, preco, url):
     message = ''
-    message += 'Novo anúncio detectado!'
-    message += '\n'
-    message += 'Título: '
+    message += '* ‼ Novo anúncio detectado! ‼*'
+    message += '\n\n'
+    message += '*Título: *'
     message += titulo
-    message += '\n'
-    message += 'Data da postagem: '
+    message += '\n\n'
+    message += '*Data da postagem:* '
     message += data_postagem
-    message += '\n'
-    message += 'Preço: '
+    message += '\n\n'
+    message += '*Preço: *'
     message += preco
-    message += '\n'
-    message += 'Link: '
+    message += '\n\n'
+    message += '*Link: *'
     message += url
+    message += '\n\n 😎'
+
 
     bot.send_message(text=message, chat_id=chat_id)
     print(f'Telegram Bot Says: "Message Sent!"')

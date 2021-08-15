@@ -39,8 +39,9 @@ for x in range(len(dados_titulos)):
     l_tit[x] = tiraBarraEne(dados_titulos[x])
     l_prec[x] = tiraBarraEne(dados_precos[x])
 
-print("tit:", l_tit)
-print("prec:", l_prec)
+print("Títulos armazenados:", l_tit)
+print("Preços armazenados:", l_prec)
+print("\n"*2)
 
 urlList = [
     'https://www.olx.com.br/brasil?q=dell%20optiplex%20micro&sf=1&op=2',  # optiplex micro
