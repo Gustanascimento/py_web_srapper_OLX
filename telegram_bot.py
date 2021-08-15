@@ -21,5 +21,5 @@ def telegram_bot_send_message(titulo, data_postagem, preco, url):
     message += url
     message += '\n\n 😎'
 
-    bot.send_message(text=message, chat_id=chat_id)
+    bot.send_message(text=message, chat_id=chat_id, parse_mode=telegram.ParseMode.MARKDOWN)
     print(f'Telegram Bot Says: "Message Sent!"')
