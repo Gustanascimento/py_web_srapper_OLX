@@ -24,8 +24,8 @@ def salvar_lista():
     arq2.close()
 
 
-l_tit = ['', '', '', '', '']  # arquivo com lista dos titulos anteriores
-l_prec = ['', '', '', '', '']  # arquivo com lista dos precos anteriores
+l_tit = ['', '', '', '', '', '', '']  # arquivo com lista dos titulos anteriores
+l_prec = ['', '', '', '', '', '', '']  # arquivo com lista dos precos anteriores
 
 titulos = open("titulos.txt", "r")
 dados_titulos = titulos.readlines()
@@ -48,7 +48,9 @@ urlList = [
     'https://www.olx.com.br/brasil?q=dell%20optiplex%20mini&sf=1&op=2',  # optiplex mini
     'https://www.olx.com.br/brasil?q=thinkcentre&sp=1&op=2',  # thinkcentre
     'https://www.olx.com.br/brasil?q=prodesk&op=2',  # prodesk
-    'https://www.olx.com.br/brasil?q=elitedesk&op=2']  # elitedesk
+    'https://www.olx.com.br/brasil?q=elitedesk&op=2', # elitedesk
+    'https://pe.olx.com.br/grande-recife?q=iphone%2011%20128gb&op=2', #iphone 11 128gb
+    'https://pe.olx.com.br/grande-recife?q=iphone%20128gb&op=2' ] #iphone 128gb
 
 request_headers = {
     'User-Agent':
