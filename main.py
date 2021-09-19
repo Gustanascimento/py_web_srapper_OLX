@@ -61,54 +61,57 @@ request_headers = {
 }
 
 while True:
-    print("Iniciando requisições ...")
-    cont = 0
-    titulo = ''
-    preco = ''
-    for url in urlList:
-        results = requests.get(url, headers=request_headers)
-        status_code = results
+    try:
+        print("Iniciando requisições ...")
+        cont = 0
+        titulo = ''
+        preco = ''
+        for url in urlList:
+            results = requests.get(url, headers=request_headers)
+            status_code = results
 
-        # HTML parser
-        soup = BeautifulSoup(results.content, "html.parser")
+            # HTML parser
+            soup = BeautifulSoup(results.content, "html.parser")
 
-        results = soup.find(id="ad-list")  # Busca todos os anuncios listados
-        product = results.find("li")  # Filtra pelo anuncio mais recente
-        data_postagem = product.find("div",
-                                     class_="wlwg1t-0 hWBHAm")  # Classe da Div no olx que contém a data de postagem
+            results = soup.find(id="ad-list")  # Busca todos os anuncios listados
+            product = results.find("li")  # Filtra pelo anuncio mais recente
+            data_postagem = product.find("div",
+                                         class_="wlwg1t-0 hWBHAm")  # Classe da Div no olx que contém a data de postagem
 
-        if data_postagem is None:  # Bug no OLX de div repetida e em branco
-            pass
-        else:
-            data_postagem = data_postagem.text.strip()
-
-            dados = product.find_all("a")
-            for link in dados:
-                url = link["href"]
-                titulo = link["title"]
-
-            preco = product.find("div", class_="aoie8y-0 hRScWw").text.strip()  # Classe da Div que contém o preço
-
-            # print("Titulo:", titulo)
-            # print("Data da postagem:", data_postagem)
-            # print("preço:", preco)
-            # print("url:", url)
-
-            # - Caso um novo anuncio tenha sido adicionado, o titulo e o preco irão mudar.
-            # - A data de postagem muda automaticamente de acordo com a hora no sistema, por
-            #   isso não estamos verificando esse valor.
-            if (titulo != l_tit[cont]) or (preco != l_prec[cont]):
-                # Caso detecte mudanca no titulo ou no preco
-                print("Mudança detectada!")
-                l_tit[cont] = titulo
-                l_prec[cont] = preco
-                salvar_lista()
-                telegram_bot_send_message(titulo, data_postagem, preco, url)
+            if data_postagem is None:  # Bug no OLX de div repetida e em branco
+                pass
             else:
-                print("Nada mudou!")
+                data_postagem = data_postagem.text.strip()
 
-        print(f'Requisição HTTP realizada para {url} e obteve o código de status {status_code} \n')
-        time.sleep(3)
-        cont += 1
-    print("Aguardando 60s ...")
-    time.sleep(60)  # Verifica a cada 60s
+                dados = product.find_all("a")
+                for link in dados:
+                    url = link["href"]
+                    titulo = link["title"]
+
+                preco = product.find("div", class_="aoie8y-0 hRScWw").text.strip()  # Classe da Div que contém o preço
+
+                # print("Titulo:", titulo)
+                # print("Data da postagem:", data_postagem)
+                # print("preço:", preco)
+                # print("url:", url)
+
+                # - Caso um novo anuncio tenha sido adicionado, o titulo e o preco irão mudar.
+                # - A data de postagem muda automaticamente de acordo com a hora no sistema, por
+                #   isso não estamos verificando esse valor.
+                if (titulo != l_tit[cont]) or (preco != l_prec[cont]):
+                    # Caso detecte mudanca no titulo ou no preco
+                    print("Mudança detectada!")
+                    l_tit[cont] = titulo
+                    l_prec[cont] = preco
+                    salvar_lista()
+                    telegram_bot_send_message(titulo, data_postagem, preco, url)
+                else:
+                    print("Nada mudou!")
+
+            print(f'Requisição HTTP realizada para {url} e obteve o código de status {status_code} \n')
+            time.sleep(3)
+            cont += 1
+        print("Aguardando 60s ...")
+        time.sleep(60)  # Verifica a cada 60s
+    except:
+        print("Erro!")
